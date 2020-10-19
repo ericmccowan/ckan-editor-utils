@@ -37,7 +37,9 @@ CKAN_ORG = 'geological-survey-of-queensland'
 CKAN_KEY = os.environ.get('CKAN_API_KEY')
 if CKAN_KEY is None:
     sys.exit('CKAN_API_KEY environment variable missing')
-
+BUCKET_NAME = os.environ.get('S3_BUCKET')
+if BUCKET_NAME is None:
+    sys.exit('S3_BUCKET environment variable missing')
 
 def test_create_package_direct():
     package_id = 'devtest_create'
@@ -97,7 +99,7 @@ def test_create_package_managed():
 
 def _test_resource_upload():
     s3_obj_summary = s3r.ObjectSummary(
-        bucket_name='sra-data-extract-copy',
+        bucket_name=BUCKET_NAME,
         key='Dev/_DSC5121_stitcha.jpg'
     )
 
@@ -165,7 +167,7 @@ def test_managed_delete():
 def _test_create_resource_managed_one():
     package_id = 'devtest_managedcreateresourceone'
     s3_obj_summary = s3r.ObjectSummary(
-        bucket_name='sra-data-extract-copy',
+        bucket_name=BUCKET_NAME,
         key='Dev/_DSC5121_stitcha.jpg'
     )
     with ckan_editor_utils.CKANEditorSession(CKAN_URL, CKAN_KEY) as cm:
@@ -206,7 +208,7 @@ def _test_create_resource_managed_one():
 def _test_create_resource_managed_two():
     package_id = 'devtest_managedcreateresourcetwo'
     s3_obj_summary = s3r.ObjectSummary(
-        bucket_name='sra-data-extract-copy',
+        bucket_name=BUCKET_NAME,
         key='Dev/_DSC5121_stitcha.jpg'
     )
     with ckan_editor_utils.CKANEditorSession(CKAN_URL, CKAN_KEY) as cm:
@@ -246,7 +248,7 @@ def _test_create_resource_managed_two():
 def test_s3_object_prefix():
     with pytest.raises(ClientError):
         s3_obj_summary = s3r.ObjectSummary(
-            bucket_name='sra-data-extract-copy',
+            bucket_name=BUCKET_NAME,
             key='Dev/'
         )
         obj_size = s3_obj_summary.size
@@ -254,7 +256,7 @@ def test_s3_object_prefix():
 # def test_s3_object_prefix_try():
 #     try:
 #         s3_obj_summary = s3r.ObjectSummary(
-#             bucket_name='sra-data-extract-copy',
+#             bucket_name=BUCKET_NAME,
 #             key='Dev/'
 #         )
 #         assert s3_obj_summary.key == 'Dev/'

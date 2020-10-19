@@ -5,7 +5,7 @@ description = "Utilities for editing CKAN using its API."
 authors = ["Eric McCowan <eric.mccowan@servian.com>"]
 license = "MIT"
 readme = "README.md"
-repository = ""
+repository = "https://github.com/ericmccowan/ckan-editor-utils"
 
 [tool.poetry.dependencies]
 python = "^3.6"
