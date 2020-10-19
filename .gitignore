@@ -1,0 +1,5 @@
+demo/
+ckan_editor_utils.egg-info/
+dist/
+.idea/
+*.pyc
